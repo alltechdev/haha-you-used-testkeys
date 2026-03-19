@@ -1,0 +1,12 @@
+# Ignore contents but keep directories
+output/*
+!output/.gitkeep
+firmware/stock/*
+!firmware/stock/.gitkeep
+firmware/custom/*
+!firmware/custom/.gitkeep
+
+# Binaries
+*.bin
+*.img
+*.zip
