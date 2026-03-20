@@ -7,20 +7,27 @@ Re-sign Android partitions for devices using AOSP testkey. Enables modifications
 Any Android device that uses AOSP testkey (SHA1: `cdbb77177f731920bbe0a0f94f84d9038ae0617d`) for vbmeta signing.
 
 **Tested:**
-- M5 (MT6761)
-- F21 Pro (MT6761)
+- Tiq Mini M5 (MT6761)
+- Qin F21 Pro (MT6761)
+
+**Untested (confirmed AOSP testkey):**
+- Zinwa Q25
 
 ## How It Works
 
-Some manufacturers ship devices with AOSP test keys instead of generating their own. Since these keys are public, we can re-sign modified partitions and the bootloader accepts them as valid.
+Some manufacturers ship devices with AOSP test keys instead of generating their own. Since the AOSP testkey is public, we can rebuild the entire AVB chain and the bootloader accepts it as valid.
 
 ```
-Bootloader → vbmeta.img (AOSP testkey) → boot/system/vendor
-                 ↓
-         We have the private key!
-                 ↓
-         Re-sign anything we want
+Bootloader trusts AOSP testkey
+         ↓
+vbmeta.img (signed with AOSP testkey)
+         ↓
+chains to our own keys for boot/vbmeta_system/vbmeta_vendor
+         ↓
+All partitions signed with our keys
 ```
+
+The toolkit **rebuilds the entire chain** - it doesn't need the device's original chain keys. Only `vbmeta.pem` must be the AOSP testkey (which the bootloader trusts). The other keys (`boot.pem`, `vbmeta_system.pem`, `vbmeta_vendor.pem`) are toolkit-generated and can be any valid RSA2048 keys.
 
 ## Prerequisites
 
@@ -140,7 +147,7 @@ rm -rf output/mnt/system_a/system/app/Bloatware
 ```
 m5_resigner/
 ├── scripts/           # All operation scripts
-├── keys/              # Signing keys (AOSP testkey + custom)
+├── keys/              # Signing keys (AOSP testkey + toolkit-generated)
 ├── tools/
 │   ├── avb-tools/     # Google avbtool
 │   ├── lpunpack_and_lpmake/  # Super.img tools
@@ -180,12 +187,19 @@ adb shell su -c id
 
 ## Key Fingerprints
 
-| Key | SHA1 |
-|-----|------|
-| vbmeta.pem (AOSP testkey) | cdbb77177f731920bbe0a0f94f84d9038ae0617d |
-| boot.pem | a9cc8a379101d07cbe9f4ab76f76fcbb2ac286cc |
-| vbmeta_system.pem | 565840a78763c9a3be92604f5aef14376ee45415 |
-| vbmeta_vendor.pem | f013c089b7f6e86cabc32f3ab24559f01b327bbf |
+| Key | SHA1 | Source |
+|-----|------|--------|
+| vbmeta.pem | cdbb77177f731920bbe0a0f94f84d9038ae0617d | **AOSP testkey** (required) |
+| boot.pem | a9cc8a379101d07cbe9f4ab76f76fcbb2ac286cc | Toolkit-generated |
+| vbmeta_system.pem | 565840a78763c9a3be92604f5aef14376ee45415 | Toolkit-generated |
+| vbmeta_vendor.pem | f013c089b7f6e86cabc32f3ab24559f01b327bbf | Toolkit-generated |
+
+> **Note:** Only `vbmeta.pem` must match the AOSP testkey. The other keys are arbitrary - the toolkit rebuilds the entire AVB chain using these keys, so they don't need to match the original firmware. You can generate your own keys with:
+> ```bash
+> openssl genrsa -out boot.pem 2048
+> openssl genrsa -out vbmeta_system.pem 2048
+> openssl genrsa -out vbmeta_vendor.pem 2048
+> ```
 
 ## Flashing
 

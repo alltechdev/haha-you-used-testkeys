@@ -194,15 +194,19 @@ for key in keys/*.pem; do
 done
 ```
 
-2. **Expected fingerprints:**
+2. **Required fingerprint (must match):**
 ```
-vbmeta.pem:        cdbb77177f731920bbe0a0f94f84d9038ae0617d
+vbmeta.pem:        cdbb77177f731920bbe0a0f94f84d9038ae0617d  ← AOSP testkey
+```
+
+3. **Toolkit defaults (can be any RSA2048 key):**
+```
 boot.pem:          a9cc8a379101d07cbe9f4ab76f76fcbb2ac286cc
 vbmeta_system.pem: 565840a78763c9a3be92604f5aef14376ee45415
 vbmeta_vendor.pem: f013c089b7f6e86cabc32f3ab24559f01b327bbf
 ```
 
-3. **If keys are wrong:** Get correct AOSP test keys
+4. **If vbmeta.pem is wrong:** Get the correct AOSP testkey. The other keys can be any valid RSA2048 keys.
 
 ---
 

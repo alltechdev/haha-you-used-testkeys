@@ -121,12 +121,14 @@ done
 
 ### Expected Key Fingerprints
 
-| Key File | SHA1 Fingerprint |
-|----------|------------------|
-| vbmeta.pem | cdbb77177f731920bbe0a0f94f84d9038ae0617d |
-| boot.pem | a9cc8a379101d07cbe9f4ab76f76fcbb2ac286cc |
-| vbmeta_system.pem | 565840a78763c9a3be92604f5aef14376ee45415 |
-| vbmeta_vendor.pem | f013c089b7f6e86cabc32f3ab24559f01b327bbf |
+| Key File | SHA1 Fingerprint | Note |
+|----------|------------------|------|
+| vbmeta.pem | cdbb77177f731920bbe0a0f94f84d9038ae0617d | **Must be AOSP testkey** |
+| boot.pem | a9cc8a379101d07cbe9f4ab76f76fcbb2ac286cc | Toolkit default (can be any RSA2048) |
+| vbmeta_system.pem | 565840a78763c9a3be92604f5aef14376ee45415 | Toolkit default (can be any RSA2048) |
+| vbmeta_vendor.pem | f013c089b7f6e86cabc32f3ab24559f01b327bbf | Toolkit default (can be any RSA2048) |
+
+> Only `vbmeta.pem` must match the AOSP testkey. The other keys are arbitrary - the toolkit rebuilds the entire AVB chain, so they don't need to match the original firmware or any specific fingerprint.
 
 ---
 

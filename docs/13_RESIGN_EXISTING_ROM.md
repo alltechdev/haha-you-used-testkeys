@@ -83,9 +83,7 @@ Check your device's super partition size:
 grep -A15 "partition_name: super" firmware/stock/*scatter*.txt | grep "partition_size:"
 ```
 
-Common sizes:
-- M5: 5GB (0x140000000)
-- F21 Pro: 4GB (0x100000000)
+Check your device's scatter file for exact size.
 
 ### Step 6: Shrink Partitions (If Needed)
 
@@ -181,14 +179,14 @@ Use SP Flash Tool with the scatter file in output/:
 
 ---
 
-## Example: F21 Pro Custom ROM
+## Example: Custom ROM
 
 ```bash
 # Cleanup
 ./scripts/cleanup.sh
 
 # Copy stock firmware (for scatter)
-cp -r /path/to/f21pro/stock/* firmware/stock/
+cp -r /path/to/stock/* firmware/stock/
 
 # Copy custom ROM
 cp /path/to/custom/super.img firmware/custom/
@@ -207,7 +205,7 @@ Or manually if you need to shrink partitions:
 # Unpack modified super
 ./scripts/unpack_super.sh firmware/custom/super.img
 
-# Shrink partitions (F21 Pro has 4GB super, often needed)
+# Shrink partitions (often needed if custom ROM exceeds device super size)
 for img in output/super_unpacked/system_a.img output/super_unpacked/vendor_a.img output/super_unpacked/product_a.img; do
     tools/android-bins/e2fsck -f -y "$img"
     tools/android-bins/resize2fs -M "$img"

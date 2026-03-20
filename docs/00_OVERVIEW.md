@@ -69,19 +69,21 @@ Files: testkey.pk8, testkey.x509.pem
 ```
 
 We have these keys in our `keys/` directory:
-- `vbmeta.pem` - AOSP testkey (root of trust)
-- `boot.pem` - Signs boot partition
-- `vbmeta_system.pem` - Signs vbmeta_system (contains system/product hashtrees)
-- `vbmeta_vendor.pem` - Signs vbmeta_vendor (contains vendor hashtree)
+- `vbmeta.pem` - **AOSP testkey** (root of trust - this one must match)
+- `boot.pem` - Toolkit-generated key for boot partition
+- `vbmeta_system.pem` - Toolkit-generated key for vbmeta_system
+- `vbmeta_vendor.pem` - Toolkit-generated key for vbmeta_vendor
+
+> **Important:** Only `vbmeta.pem` must be the AOSP testkey. The other keys are arbitrary RSA2048 keys that the toolkit uses to rebuild the entire AVB chain. They don't need to match the device's original firmware keys. You can generate your own if desired.
 
 ### What We Can Do
 
-Since we have the private keys:
+Since the bootloader trusts the AOSP testkey, we can rebuild the entire chain:
 1. Modify any partition (system, vendor, product, boot)
 2. Recalculate the hashtree/hash
-3. Sign with the correct key
-4. Update the chain (vbmeta_system, vbmeta_vendor, vbmeta)
-5. Flash - bootloader accepts our signatures!
+3. Sign with our own keys
+4. Rebuild the chain (vbmeta_system, vbmeta_vendor, vbmeta) pointing to our keys
+5. Flash - bootloader verifies vbmeta.img with AOSP testkey and accepts it!
 
 ---
 
@@ -107,8 +109,9 @@ The device is supported.
 
 | Device | Chipset | Status |
 |--------|---------|--------|
-| M5 | MT6761 | Working |
-| F21 Pro | MT6761 | Working |
+| Tiq Mini M5 | MT6761 | Working |
+| Qin F21 Pro | MT6761 | Working |
+| Zinwa Q25 | - | Untested (confirmed AOSP testkey) |
 
 ---
 

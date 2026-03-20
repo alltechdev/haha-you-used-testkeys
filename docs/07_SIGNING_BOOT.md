@@ -154,7 +154,7 @@ After running:
 
 ```
 output/
-└── boot.img    ← Re-signed boot image (32MB for typical M5/F21 devices)
+└── boot.img    ← Re-signed boot image
 ```
 
 ---
