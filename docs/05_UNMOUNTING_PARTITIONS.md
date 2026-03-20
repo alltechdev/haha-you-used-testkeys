@@ -14,7 +14,7 @@ After making modifications, partitions must be unmounted before repacking. The `
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/unmount_partition.sh
+/path/to/haha-you-used-testkeys/scripts/unmount_partition.sh
 ```
 
 ### Usage
@@ -32,7 +32,7 @@ Where `partition_name` is one of: `system_a`, `vendor_a`, `product_a`
 ### Step 1: Unmount System Partition
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ./scripts/unmount_partition.sh system_a
 ```
 
@@ -86,7 +86,7 @@ rmdir output/mnt/.system_a_loop
 ### Check No Mounts Remain
 
 ```bash
-mount | grep m5_resigner
+mount | grep haha-you-used-testkeys
 ```
 
 **Expected:** No output (nothing mounted)

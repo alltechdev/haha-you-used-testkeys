@@ -360,6 +360,9 @@ resign_boot() {
     print_header
     echo -e "${BOLD}Re-sign Boot.img${NC}"
     echo ""
+    echo -e "${YELLOW}Note: This only signs boot.img. You still need to run Rebuild vbmeta.${NC}"
+    echo -e "${YELLOW}For boot-only modifications, use 'Boot only (Magisk)' in Automated menu.${NC}"
+    echo ""
 
     echo "Options:"
     echo "  1) Sign stock boot (firmware/stock/boot.img)"
@@ -403,6 +406,34 @@ resign_boot() {
             ;;
         0) return ;;
     esac
+
+    pause
+}
+
+boot_only_magisk() {
+    print_header
+    echo -e "${BOLD}Boot Only (Magisk)${NC}"
+    echo ""
+    echo "Use this when ONLY modifying boot (e.g., Magisk root)."
+    echo "Do NOT use this if you're also modifying system/vendor/product."
+    echo ""
+
+    if [ ! -f "$STOCK/super.img" ]; then
+        echo -e "${RED}No stock firmware loaded. Load stock firmware first.${NC}"
+        pause
+        return
+    fi
+
+    echo "Enter path to patched boot.img (e.g., magisk_patched.img):"
+    read -e -p "> " boot_path
+    if [ ! -f "$boot_path" ]; then
+        echo -e "${RED}File not found.${NC}"
+        pause
+        return
+    fi
+
+    echo ""
+    "$SCRIPTS/resign_boot_only.sh" "$boot_path"
 
     pause
 }
@@ -722,10 +753,11 @@ main_menu() {
         echo -e "  ${CYAN}Automated:${NC}"
         echo "   13) Full process (modify stock)"
         echo "   14) Re-sign existing ROM"
+        echo "   15) Boot only (Magisk)"
         echo ""
         echo -e "  ${CYAN}Tools:${NC}"
-        echo "   15) Shrink partitions"
-        echo "   16) Cleanup"
+        echo "   16) Shrink partitions"
+        echo "   17) Cleanup"
         echo ""
         echo "    0) Exit"
         echo ""
@@ -746,8 +778,9 @@ main_menu() {
             12) show_output ;;
             13) full_process_stock ;;
             14) resign_existing_rom ;;
-            15) shrink_partitions ;;
-            16) cleanup ;;
+            15) boot_only_magisk ;;
+            16) shrink_partitions ;;
+            17) cleanup ;;
             0)
                 clear_screen
                 echo "Goodbye!"

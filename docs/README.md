@@ -103,7 +103,7 @@ adb pull /sdcard/Download/magisk_patched_*.img magisk_patched.img
 ## Directory Structure
 
 ```
-m5_resigner/
+haha-you-used-testkeys/
 ├── scripts/           # Operation scripts
 ├── keys/              # Signing keys (AOSP testkey + derived)
 ├── tools/             # avbtool, lpunpack, lpmake, e2fsck, etc.

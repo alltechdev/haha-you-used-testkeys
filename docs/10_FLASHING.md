@@ -24,12 +24,9 @@ After running all scripts, you have these files in `output/`:
 
 | Modification | Flash These Files |
 |--------------|------------------|
-| Boot only (Magisk root) | boot.img, vbmeta.img |
-| System only | super.img, vbmeta_system.img |
-| Vendor only | super.img, vbmeta_vendor.img |
-| Product only | super.img, vbmeta_system.img |
-| Full system modification | super.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
-| Full (boot + system) | ALL files |
+| Boot only (Magisk root) | boot.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
+| System/Vendor/Product only | super.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
+| Boot + System (full) | boot.img, super.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
 
 ---
 
@@ -38,7 +35,7 @@ After running all scripts, you have these files in `output/`:
 ### Step 1: Copy Output Files to Firmware Directory
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 
 # Copy re-signed images to stock firmware folder
 cp output/boot.img firmware/stock/

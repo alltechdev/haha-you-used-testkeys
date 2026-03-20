@@ -118,7 +118,7 @@ The device is supported.
 ## Directory Structure
 
 ```
-m5_resigner/
+haha-you-used-testkeys/
 ├── scripts/                    # All operation scripts
 │   ├── check_testkey.sh       # Verify device uses AOSP testkey
 │   ├── unpack_super.sh        # Extract partitions from super.img

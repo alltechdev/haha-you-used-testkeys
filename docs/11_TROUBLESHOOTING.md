@@ -285,7 +285,7 @@ When asking for help, provide:
 
 ```bash
 # Check what's mounted
-mount | grep m5_resigner
+mount | grep haha-you-used-testkeys
 
 # Check disk usage
 df -h output/mnt/*/

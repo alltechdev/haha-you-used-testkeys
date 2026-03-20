@@ -16,7 +16,7 @@ To modify partition contents, we need to mount the ext4 images. The `modify_part
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/modify_partition.sh
+/path/to/haha-you-used-testkeys/scripts/modify_partition.sh
 ```
 
 ### Usage
@@ -39,7 +39,7 @@ sudo ./scripts/modify_partition.sh <partition.img> [--resize]
 ### Step 1: Mount System Partition
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 sudo ./scripts/modify_partition.sh output/super_unpacked/system_a.img --resize
 ```
 
@@ -51,9 +51,9 @@ Resizing partition (+50MB)...
 Pass 5: Checking group summary information
 /: 3538/3840 files (0.5% non-contiguous), 446709/460840 blocks
 
-Mounting /path/to/m5_resigner/output/super_unpacked/system_a.img...
+Mounting /path/to/haha-you-used-testkeys/output/super_unpacked/system_a.img...
 
-=== Partition mounted at: /path/to/m5_resigner/output/mnt/system_a ===
+=== Partition mounted at: /path/to/haha-you-used-testkeys/output/mnt/system_a ===
 
 acct
 apex
@@ -65,7 +65,7 @@ vendor
 ...
 
 Filesystem      Size  Used Avail Use% Mounted on
-/dev/loop7      1.9G  1.8G  140M  93% /path/to/m5_resigner/output/mnt/.system_a_loop
+/dev/loop7      1.9G  1.8G  140M  93% /path/to/haha-you-used-testkeys/output/mnt/.system_a_loop
 
 Make your modifications (no sudo needed), then run:
   ./scripts/unmount_partition.sh system_a
@@ -180,7 +180,7 @@ output/mnt/
 ### Check Mount Points
 
 ```bash
-mount | grep m5_resigner
+mount | grep haha-you-used-testkeys
 ```
 
 **Expected Output:**

@@ -16,7 +16,7 @@ After modification, boot.img must be re-signed with our boot.pem key so the vbme
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/resign_boot.sh
+/path/to/haha-you-used-testkeys/scripts/resign_boot.sh
 ```
 
 ### What It Does
@@ -72,7 +72,7 @@ adb pull /sdcard/Download/magisk_patched_*.img magisk_patched.img
 ### Step 5: Re-sign with Our Key
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ./scripts/resign_boot.sh magisk_patched.img
 ```
 
@@ -85,7 +85,7 @@ Re-signing boot.img...
 Signed boot.img public key:
 Public key (sha1):        a9cc8a379101d07cbe9f4ab76f76fcbb2ac286cc
 
-Output: /path/to/m5_resigner/output/boot.img
+Output: /path/to/haha-you-used-testkeys/output/boot.img
 ```
 
 ---

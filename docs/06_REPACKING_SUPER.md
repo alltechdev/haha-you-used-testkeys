@@ -18,7 +18,7 @@ The `repack_super.sh` script handles all of this automatically.
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/repack_super.sh
+/path/to/haha-you-used-testkeys/scripts/repack_super.sh
 ```
 
 ### What It Does
@@ -47,14 +47,14 @@ No arguments needed - it uses partitions from `output/super_unpacked/`.
 
 ```bash
 # Verify nothing is mounted
-mount | grep m5_resigner
+mount | grep haha-you-used-testkeys
 # Should return nothing
 ```
 
 ### Step 2: Run Repack Script
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ./scripts/repack_super.sh
 ```
 

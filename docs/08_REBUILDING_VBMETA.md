@@ -19,7 +19,7 @@ After modifying any partition, vbmeta.img must be rebuilt to update the chain.
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/rebuild_vbmeta.sh
+/path/to/haha-you-used-testkeys/scripts/rebuild_vbmeta.sh
 ```
 
 ### What It Does
@@ -52,7 +52,7 @@ The script needs:
 ### Step 2: Run Rebuild Script
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ./scripts/rebuild_vbmeta.sh
 ```
 
@@ -88,7 +88,7 @@ Descriptors:
       Rollback Index Location: 1
       Public key (sha1):       f013c089b7f6e86cabc32f3ab24559f01b327bbf
 
-Output: /path/to/m5_resigner/output/vbmeta.img
+Output: /path/to/haha-you-used-testkeys/output/vbmeta.img
 ```
 
 ---

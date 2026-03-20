@@ -69,17 +69,33 @@ For a guided experience, run the interactive TUI:
 ./scripts/check_testkey.sh firmware/stock/vbmeta.img
 ```
 
-### 2. Root with Magisk
+### 2. Boot Only (e.g., Magisk Root)
+
+Use this when ONLY modifying boot, not system/vendor/product:
 
 ```bash
-# Patch boot.img with Magisk app, then re-sign:
+./scripts/resign_boot_only.sh magisk_patched.img
+
+# Flash: boot_a, vbmeta_a, vbmeta_system_a, vbmeta_vendor_a
+# Do NOT flash super
+```
+
+### 3. Boot + System Modifications
+
+Use this when modifying BOTH boot AND system/vendor/product:
+
+```bash
+# Unpack, modify, repack super (see section 5 below)
+./scripts/repack_super.sh
+
+# Then sign boot
 ./scripts/resign_boot.sh magisk_patched.img
 ./scripts/rebuild_vbmeta.sh
 
-# Flash boot_a and vbmeta_a using SP Flash Tool
+# Flash: boot_a, super, vbmeta_a, vbmeta_system_a, vbmeta_vendor_a
 ```
 
-### 3. Re-sign Existing ROM
+### 4. Re-sign Existing ROM
 
 Already have a modified ROM? Re-sign it for locked bootloader:
 
@@ -101,7 +117,7 @@ This automatically:
 - Adds AVB hashtrees and signs everything
 - Verifies the chain
 
-### 4. Modify System/Vendor/Product
+### 5. Modify System/Vendor/Product
 
 ```bash
 # Unpack super.img
@@ -138,6 +154,7 @@ rm -rf output/mnt/system_a/system/app/Bloatware
 | `extract_partition.sh` | Copy all files from partition |
 | `repack_super.sh` | Rebuild super.img with hashtrees (lpmake) |
 | `resign_boot.sh` | Re-sign boot.img |
+| `resign_boot_only.sh` | Boot-only workflow (Magisk) - no super modification |
 | `rebuild_vbmeta.sh` | Rebuild vbmeta chain |
 | `verify_chain.sh` | Verify AVB signature chain |
 | `resign_existing_rom.sh` | Re-sign an already modified ROM (auto-shrinks if needed) |
@@ -146,7 +163,7 @@ rm -rf output/mnt/system_a/system/app/Bloatware
 ## Directory Structure
 
 ```
-m5_resigner/
+haha-you-used-testkeys/
 ├── scripts/           # All operation scripts
 ├── keys/              # Signing keys (AOSP testkey + toolkit-generated)
 ├── tools/
@@ -168,10 +185,9 @@ After running scripts, flash these:
 
 | Modification | Flash These |
 |--------------|-------------|
-| Boot only (Magisk) | boot.img, vbmeta.img |
-| System only | super.img, vbmeta_system.img |
-| Vendor only | super.img, vbmeta_vendor.img |
-| Full | boot.img, super.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
+| Boot only (Magisk) | boot.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
+| System/Vendor/Product only | super.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
+| Boot + System (full) | boot.img, super.img, vbmeta.img, vbmeta_system.img, vbmeta_vendor.img |
 
 ## Verification
 

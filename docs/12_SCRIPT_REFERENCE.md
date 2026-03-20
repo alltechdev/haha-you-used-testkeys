@@ -2,7 +2,7 @@
 
 ## Overview
 
-All scripts are located in `/path/to/m5_resigner/scripts/`.
+All scripts are located in `/path/to/haha-you-used-testkeys/scripts/`.
 
 | Script | Purpose |
 |--------|---------|

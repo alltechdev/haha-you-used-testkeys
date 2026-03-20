@@ -28,7 +28,7 @@ Raw format: Uncompressed, actual partition data
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/unpack_super.sh
+/path/to/haha-you-used-testkeys/scripts/unpack_super.sh
 ```
 
 ### What It Does
@@ -50,7 +50,7 @@ Raw format: Uncompressed, actual partition data
 ### Step 1: Navigate to Repository
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ```
 
 ### Step 2: Run Unpack Script
@@ -75,7 +75,7 @@ total 3.6G
 -rw-r--r-- 1 user user    0 vendor_b.img
 
 To mount a partition for modification:
-  ./scripts/modify_partition.sh /path/to/m5_resigner/output/super_unpacked/system_a.img --resize
+  ./scripts/modify_partition.sh /path/to/haha-you-used-testkeys/output/super_unpacked/system_a.img --resize
 ```
 
 ---

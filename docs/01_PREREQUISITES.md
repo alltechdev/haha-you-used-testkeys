@@ -52,16 +52,16 @@ You need the stock firmware for your device. This typically comes as a folder co
 
 ```bash
 # Create firmware directory if needed
-mkdir -p /path/to/m5_resigner/firmware/stock
+mkdir -p /path/to/haha-you-used-testkeys/firmware/stock
 
 # Copy all firmware files
-cp /path/to/your/firmware/* /path/to/m5_resigner/firmware/stock/
+cp /path/to/your/firmware/* /path/to/haha-you-used-testkeys/firmware/stock/
 ```
 
 ### Verify Firmware
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 
 # List firmware files
 ls -la firmware/stock/
@@ -80,7 +80,7 @@ ls -la firmware/stock/
 ## Directory Structure After Setup
 
 ```
-m5_resigner/
+haha-you-used-testkeys/
 ├── firmware/
 │   └── stock/
 │       ├── MT6761_Android_scatter.txt    ← Partition layout
@@ -110,7 +110,7 @@ m5_resigner/
 ## Verify Keys Are Present
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 
 # Check key fingerprints
 for key in keys/*.pem; do
@@ -135,7 +135,7 @@ done
 ## Verify Tools Are Present
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 
 # Check avbtool
 python3 tools/avb-tools/avbtool.py version
@@ -175,7 +175,7 @@ grep "user_allow_other" /etc/fuse.conf
 Run the testkey check on your firmware:
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ./scripts/check_testkey.sh firmware/stock/vbmeta.img
 ```
 
@@ -207,4 +207,4 @@ If your device shows NOT VULNERABLE, this toolkit cannot help - the manufacturer
 
 Once you see "VULNERABLE - Uses AOSP testkey!", proceed to:
 - [02_UNPACKING_SUPER.md](02_UNPACKING_SUPER.md) - Extract partitions
-- [06_ROOTING_BOOT.md](06_ROOTING_BOOT.md) - Root with Magisk
+- [07_SIGNING_BOOT.md](07_SIGNING_BOOT.md) - Root with Magisk

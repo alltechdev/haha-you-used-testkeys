@@ -16,7 +16,7 @@ Before flashing, verify that all signatures are correct and the chain is complet
 
 ### Location
 ```
-/path/to/m5_resigner/scripts/verify_chain.sh
+/path/to/haha-you-used-testkeys/scripts/verify_chain.sh
 ```
 
 ### What It Does
@@ -39,7 +39,7 @@ Before flashing, verify that all signatures are correct and the chain is complet
 ### Run Verification
 
 ```bash
-cd /path/to/m5_resigner
+cd /path/to/haha-you-used-testkeys
 ./scripts/verify_chain.sh
 ```
 
