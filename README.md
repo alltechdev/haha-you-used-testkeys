@@ -12,6 +12,7 @@ Any Android device that uses AOSP testkey (SHA1: `cdbb77177f731920bbe0a0f94f84d9
 
 **Untested (confirmed AOSP testkey):**
 - Zinwa Q25
+- Doov R77 (NC)
 
 ## How It Works
 
