@@ -20,12 +20,27 @@ for key in boot vbmeta_system vbmeta_vendor; do
     fi
 done
 
-# Check for dtbo.img (optional)
-DTBO_ARGS=""
-if [ -f "$ROOT_DIR/firmware/dtbo.img" ]; then
-    echo "Including dtbo.img..."
-    DTBO_ARGS="--include_descriptors_from_image $ROOT_DIR/firmware/dtbo.img"
-fi
+# Build list of additional images to include descriptors from
+# These partitions have their hashtrees directly in vbmeta.img (not in vbmeta_system/vendor)
+EXTRA_ARGS=""
+STOCK="$ROOT_DIR/firmware/stock"
+UNPACKED="$OUTPUT/super_unpacked"
+
+# From stock firmware
+for img in dtbo.img vendor_boot.img; do
+    if [ -f "$STOCK/$img" ]; then
+        echo "Including $img from stock..."
+        EXTRA_ARGS="$EXTRA_ARGS --include_descriptors_from_image $STOCK/$img"
+    fi
+done
+
+# From unpacked super (product, system_ext, odm_dlkm, vendor_dlkm)
+for part in product_a system_ext_a odm_dlkm_a vendor_dlkm_a; do
+    if [ -f "$UNPACKED/${part}.img" ]; then
+        echo "Including ${part}.img from unpacked super..."
+        EXTRA_ARGS="$EXTRA_ARGS --include_descriptors_from_image $UNPACKED/${part}.img"
+    fi
+done
 
 # Create vbmeta.img
 echo "Creating vbmeta.img..."
@@ -36,7 +51,7 @@ python3 "$AVB" make_vbmeta_image \
     --chain_partition boot:3:"$KEYS/boot.avbpubkey" \
     --chain_partition vbmeta_system:2:"$KEYS/vbmeta_system.avbpubkey" \
     --chain_partition vbmeta_vendor:4:"$KEYS/vbmeta_vendor.avbpubkey" \
-    $DTBO_ARGS || { echo "ERROR: Failed to create vbmeta.img"; exit 1; }
+    $EXTRA_ARGS || { echo "ERROR: Failed to create vbmeta.img"; exit 1; }
 
 echo ""
 echo "vbmeta.img created:"

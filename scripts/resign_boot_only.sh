@@ -59,13 +59,13 @@ fi
 echo ""
 
 # Step 2: Create vbmeta_system from existing hashtree footers
+# Note: Only system goes in vbmeta_system. product/system_ext/etc go in vbmeta.img directly
 echo "=== Step 2: Creating vbmeta_system.img (from existing hashtrees) ==="
 python3 "$AVB" make_vbmeta_image \
     --output "$OUTPUT/vbmeta_system.img" \
     --key "$KEYS/vbmeta_system.pem" \
     --algorithm SHA256_RSA2048 \
-    --include_descriptors_from_image "$UNPACKED/system_a.img" \
-    --include_descriptors_from_image "$UNPACKED/product_a.img" || { echo "ERROR: Failed to create vbmeta_system.img"; exit 1; }
+    --include_descriptors_from_image "$UNPACKED/system_a.img" || { echo "ERROR: Failed to create vbmeta_system.img"; exit 1; }
 echo ""
 
 # Step 3: Create vbmeta_vendor from existing hashtree footers
