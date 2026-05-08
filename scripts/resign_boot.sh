@@ -25,8 +25,8 @@ PART_SIZE="${2:-}"
 if [ -z "$PART_SIZE" ]; then
     SCATTER=$(find "$FIRMWARE" -name "*scatter*.txt" 2>/dev/null | head -1)
     if [ -n "$SCATTER" ] && [ -f "$SCATTER" ]; then
-        PART_SIZE_HEX=$(grep -A15 "partition_name: boot_a" "$SCATTER" | grep "partition_size:" | head -1 | awk '{print $2}')
-        if [ -n "$PART_SIZE_HEX" ]; then
+        PART_SIZE_HEX=$(grep -A15 "partition_name: boot_a" "$SCATTER" | grep "partition_size:" | head -1 | awk '{print $2}' | tr -d '\r' | xargs)
+        if [[ "$PART_SIZE_HEX" =~ ^0x[0-9a-fA-F]+$ ]]; then
             PART_SIZE=$((PART_SIZE_HEX))
             echo "Boot partition size from scatter: $PART_SIZE bytes"
         fi
