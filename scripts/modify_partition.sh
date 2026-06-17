@@ -45,6 +45,23 @@ BASENAME=$(basename "$IMAGE" .img)
 LOOP_MOUNT="$ROOT_DIR/output/mnt/.${BASENAME}_loop"
 USER_MOUNT="$ROOT_DIR/output/mnt/$BASENAME"
 
+# Preflight: bindfs needs the FUSE2 runtime library (libfuse.so.2)
+if ldd "$BINDFS" 2>/dev/null | grep -q "not found"; then
+    echo "Error: bindfs cannot load its shared libraries (FUSE2 runtime missing)."
+    echo "Install it with:"
+    echo "  sudo apt install libfuse2t64    # Ubuntu 24.04+"
+    echo "  sudo apt install libfuse2       # Ubuntu 22.04 and earlier"
+    exit 1
+fi
+
+# Preflight: bindfs mounts with allow_other, which FUSE blocks unless enabled
+if ! grep -q "^user_allow_other" /etc/fuse.conf 2>/dev/null; then
+    echo "Error: 'user_allow_other' is not enabled in /etc/fuse.conf."
+    echo "bindfs needs it to expose the mount to your user. Enable it with:"
+    echo "  sudo sh -c 'echo user_allow_other >> /etc/fuse.conf'"
+    exit 1
+fi
+
 # Remove AVB footer if present
 echo "Removing AVB footer..."
 python3 "$AVB" erase_footer --image "$IMAGE" 2>/dev/null || true

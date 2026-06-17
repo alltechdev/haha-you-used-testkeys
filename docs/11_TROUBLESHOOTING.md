@@ -118,13 +118,48 @@ sudo apt install android-sdk-libsparse-utils
 
 ---
 
-### "user_allow_other only allowed..."
+### "bindfs: error while loading shared libraries: libfuse.so.2"
 
-**Cause:** FUSE not configured for user mounts.
+**Symptoms:**
+- `modify_partition.sh` prints `libfuse.so.2: cannot open shared object file`
+- The image gets loop-mounted but `output/mnt/<partition>/` is empty
+
+**Cause:** The bundled `bindfs` needs the FUSE2 runtime library, which is not
+installed by default on Ubuntu 24.04.
 
 **Fix:**
 ```bash
-sudo sh -c 'echo "user_allow_other" >> /etc/fuse.conf'
+sudo apt install libfuse2t64    # Ubuntu 24.04+
+# sudo apt install libfuse2      # Ubuntu 22.04 and earlier
+```
+
+Then clean up the half-mounted image and re-run **without** `--resize` (the
+failed run already resized and stripped the AVB footer):
+```bash
+./scripts/unmount_partition.sh system_a
+./scripts/modify_partition.sh output/super_unpacked/system_a.img
+```
+
+---
+
+### "user_allow_other only allowed..."
+
+**Cause:** FUSE not configured for user mounts. bindfs mounts with
+`allow_other`, which FUSE blocks until it is enabled system-wide.
+
+**Symptoms:**
+- `fusermount: option allow_other only allowed if 'user_allow_other' is set in /etc/fuse.conf`
+- `output/mnt/<partition>/` is empty after mounting
+
+**Fix:**
+```bash
+sudo sh -c 'grep -q "^user_allow_other" /etc/fuse.conf || echo "user_allow_other" >> /etc/fuse.conf'
+```
+
+Then clean up and re-run:
+```bash
+./scripts/unmount_partition.sh system_a
+./scripts/modify_partition.sh output/super_unpacked/system_a.img
 ```
 
 ---

@@ -13,7 +13,16 @@
 ```bash
 # Required for sparse image conversion (simg2img)
 sudo apt install android-sdk-libsparse-utils
+
+# Required FUSE2 runtime for bindfs (provides libfuse.so.2)
+sudo apt install libfuse2t64    # Ubuntu 24.04+
+# On Ubuntu 22.04 and earlier the package is named libfuse2:
+# sudo apt install libfuse2
 ```
+
+> The bundled `tools/android-bins/bindfs` is dynamically linked against
+> `libfuse.so.2`. Without the FUSE2 runtime installed, mounting fails with
+> `bindfs: error while loading shared libraries: libfuse.so.2`.
 
 ### Verify Installation
 
@@ -21,6 +30,10 @@ sudo apt install android-sdk-libsparse-utils
 # Check simg2img is available
 which simg2img
 # Expected: /usr/bin/simg2img
+
+# Check bindfs can load its libraries (no "not found" lines)
+ldd tools/android-bins/bindfs | grep fuse
+# Expected: libfuse.so.2 => /lib/x86_64-linux-gnu/libfuse.so.2 (...)
 ```
 
 ---

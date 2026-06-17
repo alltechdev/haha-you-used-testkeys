@@ -33,7 +33,16 @@ The toolkit **rebuilds the entire chain** - it doesn't need the device's origina
 ## Prerequisites
 
 ```bash
-sudo apt install android-sdk-libsparse-utils
+# Sparse image tools + FUSE2 runtime (bindfs needs libfuse.so.2)
+sudo apt install android-sdk-libsparse-utils libfuse2t64   # Ubuntu 24.04+
+# On Ubuntu 22.04 and earlier the package is named libfuse2:
+# sudo apt install android-sdk-libsparse-utils libfuse2
+```
+
+The mount step also needs `user_allow_other` enabled in FUSE:
+
+```bash
+sudo sh -c 'grep -q "^user_allow_other" /etc/fuse.conf || echo "user_allow_other" >> /etc/fuse.conf'
 ```
 
 ## Setup
