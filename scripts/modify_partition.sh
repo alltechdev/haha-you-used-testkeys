@@ -79,8 +79,10 @@ echo "Mounting $IMAGE..."
 mkdir -p "$LOOP_MOUNT" "$USER_MOUNT"
 sudo mount -o loop,rw "$IMAGE" "$LOOP_MOUNT"
 
-# bindfs with force-user/group to make all files appear owned by current user
-"$BINDFS" -u $(id -u) -g $(id -g) -p 0755,a+rw "$LOOP_MOUNT" "$USER_MOUNT"
+# bindfs must run as root so it can modify the root-owned files inside the
+# image. -u/-g/-p present everything as the current user (so you can edit
+# without sudo) and allow_other lets your account access the root-owned mount.
+sudo "$BINDFS" -o allow_other -u "$(id -u)" -g "$(id -g)" -p 0755,a+rw "$LOOP_MOUNT" "$USER_MOUNT"
 
 echo ""
 echo "=== Partition mounted at: $USER_MOUNT ==="

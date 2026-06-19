@@ -19,11 +19,21 @@ USER_MOUNT="$ROOT_DIR/output/mnt/$BASENAME"
 
 echo "Unmounting $BASENAME..."
 
-# Unmount bindfs first (try both methods)
-umount "$USER_MOUNT" 2>/dev/null || fusermount -u "$USER_MOUNT" 2>/dev/null || true
+# Unmount bindfs first (mounted by root, so needs sudo). Try both helpers.
+sudo umount "$USER_MOUNT" 2>/dev/null || sudo fusermount -u "$USER_MOUNT" 2>/dev/null || true
 
 # Unmount loop
 sudo umount "$LOOP_MOUNT" 2>/dev/null || true
+
+# Verify it actually unmounted before claiming success
+if mountpoint -q "$USER_MOUNT" || mountpoint -q "$LOOP_MOUNT"; then
+    echo "Error: $BASENAME is still mounted (something is using it)."
+    echo "Close any file managers or shells inside output/mnt/$BASENAME, then retry."
+    echo "Force unmount with:"
+    echo "  sudo fusermount -uz $USER_MOUNT"
+    echo "  sudo umount -l $LOOP_MOUNT"
+    exit 1
+fi
 
 # Clean up directories
 rmdir "$USER_MOUNT" 2>/dev/null || true
