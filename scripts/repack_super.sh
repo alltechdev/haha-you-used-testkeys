@@ -22,8 +22,8 @@ echo "=== Repacking Super.img ==="
 SCATTER=$(find "$FIRMWARE" -name "*scatter*.txt" 2>/dev/null | head -1)
 if [ -n "$SCATTER" ] && [ -f "$SCATTER" ]; then
     # Extract partition_size for super partition (format: partition_size: 0x...)
-    SUPER_SIZE_HEX=$(grep -A15 "partition_name: super" "$SCATTER" | grep "partition_size:" | head -1 | awk '{print $2}')
-    if [ -n "$SUPER_SIZE_HEX" ]; then
+    SUPER_SIZE_HEX=$(grep -A15 "partition_name: super" "$SCATTER" | grep "partition_size:" | head -1 | awk '{print $2}' | tr -d '\r' | xargs)
+    if [[ "$SUPER_SIZE_HEX" =~ ^0x[0-9a-fA-F]+$ ]]; then
         SUPER_SIZE=$((SUPER_SIZE_HEX))
         echo "Super partition size from scatter: $SUPER_SIZE bytes ($SUPER_SIZE_HEX)"
     fi
