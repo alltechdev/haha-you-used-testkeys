@@ -7,12 +7,15 @@ Re-sign Android partitions for devices using AOSP testkey. Enables modifications
 Any Android device that uses AOSP testkey (SHA1: `cdbb77177f731920bbe0a0f94f84d9038ae0617d`) for vbmeta signing.
 
 **Tested:**
-- Tiq Mini M5 (MT6761)
-- Qin F21 Pro (MT6761)
+- Tiq Mini M5(s/n) (MT6761)
+- Duoqin Qin F21 Pro (MT6761)
+- Duoqin Qin F22 (MT6739)
+- Duoqin Qin 3 Ultra (MT6789)
+- ALT Mive Style Folder 1 AT-M120 (MT6761)
+- Doov R17/Z17, R70(s)/R77(s), M17 (MT6761/MT6762/MT6765)
+- Zinwa Q25 (MT6789)
 
 **Untested (confirmed AOSP testkey):**
-- Zinwa Q25
-- Doov R77 (NC)
 
 ## How It Works
 
